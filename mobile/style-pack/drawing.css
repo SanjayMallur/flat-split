@@ -1,0 +1,161 @@
+/*
+  Tally, for the drawing step (docs/plans/PLAN-style-packs.md, T9 / E1).
+
+  The HTML twin of Tally's React Native parts in components/. DesignAgent draws the user's screens
+  with these classes, and the approved drawing is what RNDev then builds from those components,
+  so every value here is the component's own value. Change a component, change its class here:
+  tests/test_style_packs.py checks the palette, radii and type sizes against theme.generated.ts,
+  and scripts/style_pack_preview.py tally --drawing renders this sheet beside the real preview.
+
+  Parts (class: what it is, and the component it stands for):
+    .pk-topbar > .pk-topbar-row + .pk-title       TallyTopBar: mono eyebrow, 36px serif title
+    .pk-eyebrow (.pk-ink-accent)                  Eyebrow
+    .pk-figure.pk-f-hero|xl|lg|md|sm (.pk-ink-accent .pk-ink-danger) > .pk-cents   Figure (52/36/24/17/14)
+    .pk-display                                   Display: the serif
+    .pk-section > .pk-section-title + .pk-eyebrow.pk-ink-accent   SectionHead over a thin rule
+    .pk-note > .pk-note-frame + .pk-eyebrow + .pk-figure + .pk-note-meta   BanknoteCard
+    .pk-trend (svg)                               TrendLine
+    .pk-row > .pk-mono + .pk-row-main             LedgerRow
+      .pk-row-top > .pk-row-name + .pk-leader + .pk-figure; .pk-row-meta
+    .pk-mono (.pk-mono-accent)                    Monogram
+    .pk-envelope > .pk-envelope-top + .pk-envelope-track > .pk-envelope-fill (style="width: N%")   EnvelopeBar (.pk-envelope-over)
+    .pk-receipt > .pk-receipt-line (.pk-receipt-total), .pk-receipt-cut   ReceiptCard, ReceiptLine, ReceiptCut
+    .pk-button (.pk-button-ghost)                 TallyButton
+    .pk-round                                     IconButton
+    .pk-avatar > img                              Avatar: a framed photo
+    .pk-tabs > .pk-tab (.pk-tab-on)               UnderlineTabs
+    .pk-chips > .pk-chip (.pk-chip-on)            CategoryChips
+    .pk-pad > .pk-key                             AmountPad
+    .pk-donut > svg + .pk-donut-centre            SpendDonut
+    .pk-strip > .pk-strip-cell                    FigureStrip
+    .pk-field                                     the kit's single-line TextField
+*/
+@import url('https://fonts.googleapis.com/css2?family=Young+Serif&family=Lato:wght@400;700&family=DM+Mono:wght@500&display=swap');
+
+:root {
+  --color-white: #ffffff;
+  --color-bg: #0e211b;
+  --color-surface: #16302a;
+  --color-surface-alt: #204036;
+  --color-border: #2c4c42;
+  --color-overlay: rgba(0, 0, 0, 0.6);
+  --color-text: #f3ecd9;
+  --color-text-muted: #98ada3;
+  --color-text-inverse: #10211b;
+  --color-accent: #e3bd63;
+  --color-accent-pressed: #c9a44e;
+  --color-accent-text: #10211b;
+  --color-danger: #ff8a70;
+  --color-danger-text: #10211b;
+  --color-success: #8fd6a8;
+  --color-warning: #e3bd63;
+  --field-background: #16302a;
+  --field-foreground: #f3ecd9;
+  --field-placeholder: #98ada3;
+  --field-border: #2c4c42;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+  --grid-columns: 1;
+
+  --font-display: 'Young Serif', Georgia, serif;
+  --font-text: 'Lato', -apple-system, 'Segoe UI', sans-serif;
+  --font-label: 'DM Mono', ui-monospace, Menlo, monospace;
+  --font-family-h1: var(--font-display);
+  --font-family-h2: var(--font-display);
+  --font-family-h3: var(--font-text);
+  --font-family-body: var(--font-text);
+  --font-family-label: var(--font-label);
+  --font-family-caption: var(--font-text);
+  --font-size-h1: 36px; --line-height-h1: 40px; --font-weight-h1: 400; --text-transform-h1: none; --letter-spacing-h1: 0px;
+  --font-size-h2: 22px; --line-height-h2: 26px; --font-weight-h2: 400; --text-transform-h2: none; --letter-spacing-h2: 0px;
+  --font-size-h3: 15px; --line-height-h3: 20px; --font-weight-h3: 400; --text-transform-h3: none; --letter-spacing-h3: 0px;
+  --font-size-body: 15px; --line-height-body: 22px; --font-weight-body: 400; --text-transform-body: none; --letter-spacing-body: 0px;
+  --font-size-label: 11px; --line-height-label: 14px; --font-weight-label: 400; --text-transform-label: uppercase; --letter-spacing-label: 0.6px;
+  --font-size-caption: 13px; --line-height-caption: 18px; --font-weight-caption: 400; --text-transform-caption: none; --letter-spacing-caption: 0px;
+}
+
+html, body { margin: 0; background: var(--color-bg); color: var(--color-text); }
+body { font-family: var(--font-text); font-size: 15px; line-height: 22px; padding: 0 16px 24px; box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
+img { display: block; }
+
+/* Type */
+.pk-eyebrow { font: 500 11px/14px var(--font-label); letter-spacing: 0.6px; text-transform: uppercase; color: var(--color-text-muted); }
+.pk-ink-accent { color: var(--color-accent); }
+.pk-ink-danger { color: var(--color-danger); }
+.pk-display { font-family: var(--font-display); font-size: 22px; line-height: 1.18; }
+.pk-title { font-family: var(--font-display); font-size: 36px; line-height: 40px; margin-top: 4px; }
+.pk-figure { font-family: var(--font-label); font-weight: 500; letter-spacing: -0.03em; line-height: 1.2; white-space: nowrap; }
+.pk-f-hero { font-size: 52px; }
+.pk-f-xl { font-size: 36px; }
+.pk-f-lg { font-size: 24px; }
+.pk-f-md { font-size: 17px; }
+.pk-f-sm { font-size: 14px; }
+.pk-cents { font-size: 0.5em; color: var(--color-text-muted); }
+
+/* Chrome */
+.pk-topbar { padding-top: 8px; }
+.pk-topbar-row { display: flex; align-items: center; justify-content: space-between; min-height: 40px; }
+.pk-section { display: flex; align-items: baseline; justify-content: space-between; margin-top: 32px; padding-bottom: 8px; border-bottom: 1px solid var(--color-border); }
+.pk-section-title { font-family: var(--font-display); font-size: 22px; line-height: 26px; }
+.pk-round { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; }
+.pk-mono { width: 40px; height: 40px; flex: none; border-radius: 4px; background: var(--color-surface-alt); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 20px; }
+.pk-mono-accent { background: var(--color-accent); color: var(--color-accent-text); }
+.pk-avatar { width: 72px; height: 72px; border-radius: 8px; border: 1px solid var(--color-accent); padding: 3px; }
+.pk-avatar img { width: 100%; height: 100%; border-radius: 4px; object-fit: cover; }
+
+/* Blocks */
+.pk-note { position: relative; overflow: hidden; background: var(--color-surface); border-radius: 14px; padding: 20px; background-image: repeating-radial-gradient(ellipse at 88% 18%, transparent 0 7px, rgba(227, 189, 99, 0.14) 7px 7.8px); }
+.pk-note-frame { position: absolute; inset: 6px; border-radius: 8px; border: 1px solid var(--color-accent); opacity: 0.4; pointer-events: none; }
+.pk-note .pk-figure { margin-top: 10px; }
+.pk-note-meta { font: 400 15px/22px var(--font-text); margin-top: 6px; }
+.pk-trend { display: block; width: 100%; height: 56px; margin-top: 14px; }
+.pk-row { display: flex; align-items: center; padding: 11px 0; border-bottom: 0.5px solid var(--color-border); }
+.pk-row:last-child { border-bottom: 0; }
+.pk-row-main { flex: 1; min-width: 0; margin-left: 12px; }
+.pk-row-top { display: flex; align-items: flex-end; }
+.pk-row-name { font: 700 15px/20px var(--font-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pk-leader { flex: 1; height: 2px; margin: 0 6px 4px; background-image: radial-gradient(circle, var(--color-text-muted) 1px, transparent 1px); background-size: 5px 2px; opacity: 0.55; }
+.pk-row-meta { font: 400 13px/18px var(--font-text); color: var(--color-text-muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pk-envelope { padding: 11px 0; }
+.pk-envelope-top { display: flex; align-items: baseline; justify-content: space-between; font: 700 15px/20px var(--font-text); }
+.pk-envelope-sum { display: flex; align-items: baseline; gap: 5px; }
+.pk-envelope-track { height: 6px; margin-top: 8px; border-radius: 2px; background: var(--color-surface-alt); overflow: hidden; }
+.pk-envelope-fill { height: 100%; background: var(--color-accent); }
+.pk-envelope-over .pk-envelope-fill { background: var(--color-danger); }
+.pk-envelope-note { font: 400 13px/18px var(--font-text); color: var(--color-text-muted); margin-top: 5px; }
+.pk-envelope-over .pk-envelope-note { color: var(--color-danger); }
+.pk-receipt { background: var(--color-text); color: var(--color-text-inverse); border-radius: 8px 8px 0 0; padding: 20px 18px 12px; }
+.pk-receipt-line { display: flex; justify-content: space-between; gap: 12px; font: 500 14px/22px var(--font-label); }
+.pk-receipt-total { font-size: 20px; line-height: 26px; }
+.pk-receipt-cut { height: 0; margin: 12px 0; border-top: 1px dashed var(--color-text-inverse); opacity: 0.5; }
+.pk-button { height: 54px; border-radius: 8px; background: var(--color-accent); color: var(--color-accent-text); display: flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-display); font-size: 18px; margin-top: 14px; }
+.pk-button-ghost { background: transparent; color: var(--color-text); border: 1px solid var(--color-border); }
+.pk-strip { display: flex; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.pk-strip-cell { flex: 1; padding: 12px 0 12px 12px; border-left: 1px solid var(--color-border); }
+.pk-strip-cell:first-child { padding-left: 0; border-left: 0; }
+
+/* Controls */
+.pk-tabs { display: flex; gap: 22px; border-bottom: 1px solid var(--color-border); }
+.pk-tab { padding: 10px 0; margin-bottom: -1px; border-bottom: 2px solid transparent; font: 700 15px/20px var(--font-text); color: var(--color-text-muted); }
+.pk-tab-on { border-bottom-color: var(--color-accent); color: var(--color-text); }
+.pk-chips { display: flex; gap: 6px; overflow: hidden; }
+.pk-chip { flex: none; height: 36px; padding: 0 13px; border-radius: 4px; border: 1px solid var(--color-border); display: flex; align-items: center; font: 700 13px/20px var(--font-text); white-space: nowrap; }
+.pk-chip-on { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-text); }
+.pk-pad { display: flex; flex-wrap: wrap; gap: 6px; }
+.pk-key { flex: 1 1 31%; height: 52px; border-radius: 8px; background: var(--color-surface); display: flex; align-items: center; justify-content: center; font: 500 22px/28px var(--font-label); }
+.pk-field { height: 52px; border-radius: 8px; background: var(--field-background); border: 1px solid var(--field-border); display: flex; align-items: center; padding: 0 16px; font: 400 15px/22px var(--font-text); color: var(--field-placeholder); }
+
+/* Charts */
+.pk-donut { position: relative; width: 196px; height: 196px; margin: 0 auto; }
+.pk-donut svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.pk-donut-centre { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }

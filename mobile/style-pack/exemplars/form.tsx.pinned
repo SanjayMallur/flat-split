@@ -1,0 +1,40 @@
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Screen, TextField } from '@/components/ui';
+import { AmountPad, CategoryChips, Eyebrow, Figure, TallyButton, TallyTopBar } from '@/components/pack';
+
+/**
+ * EXEMPLAR — form. The amount is the form: a big mono figure over an adding machine. The envelope
+ * is one row of chips. Free text still goes through the kit's `TextField`, single line, and the
+ * save is the last thing on the page.
+ */
+export default function AddExpenseScreen() {
+  const nav = useNavigation();
+  const [amount, setAmount] = useState('62.40');
+  const [envelope, setEnvelope] = useState('Groceries');
+  const [note, setNote] = useState('');
+  return (
+    <Screen header={false}>
+      <TallyTopBar onBack={() => nav.goBack()} title="Add an expense" />
+      <View style={{ marginTop: 18, alignItems: 'center' }}>
+        <Eyebrow>Amount</Eyebrow>
+        <View style={{ marginTop: 4 }}>
+          <Figure value={`$${amount || '0'}`} size="hero" ink="accent" />
+        </View>
+      </View>
+      <View style={{ marginTop: 16 }}>
+        <CategoryChips options={['Groceries', 'Eating out', 'Home', 'Getting around', 'Fun']} value={envelope} onChange={setEnvelope} />
+      </View>
+      <View style={{ marginTop: 12 }}>
+        <TextField value={note} onChangeText={setNote} placeholder="What was it for?" />
+      </View>
+      <View style={{ marginTop: 12 }}>
+        <AmountPad value={amount} onChange={setAmount} />
+      </View>
+      <View style={{ marginTop: 12 }}>
+        <TallyButton label="Enter in the ledger" icon="check" onPress={() => nav.goBack()} />
+      </View>
+    </Screen>
+  );
+}

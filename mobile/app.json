@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "Flat Split",
+    "slug": "naapy-354868863a5efb192b9eac9aa1a67825",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "scheme": "naapyp354868863a5efb192b9eac9aa1a67825",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.naapy.p354868863a5efb192b9eac9aa1a67825"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#e3bd63"
+      },
+      "package": "com.naapy.p354868863a5efb192b9eac9aa1a67825"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-web-browser",
+      "expo-audio",
+      "expo-video",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#0e211b",
+          "imageWidth": 200,
+          "enableFullScreenImage_legacy": true
+        }
+      ]
+    ]
+  }
+}

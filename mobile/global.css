@@ -1,0 +1,37 @@
+@import 'tailwindcss';
+@import 'uniwind';
+@import 'heroui-native/styles';
+@import './theme.generated.css';
+@source './node_modules/heroui-native/lib';
+
+/*
+ * FROZEN and STATIC. The palette is NOT here — it is in `theme.generated.css`, which the
+ * pipeline rewrites per project (see services/worker/theming.py). Keeping this file static
+ * means a template upgrade never has to merge around a project's colours, and the only
+ * machine-written bytes in the stylesheet are values that passed the ThemeSpec validator.
+ *
+ * The import sits after heroui's so the generated `@layer theme` block still wins the
+ * cascade, exactly as the inline block it replaces did.
+ *
+ * Fonts are NOT set HERE, and the gap that used to be recorded here is CLOSED. A2-FONTS
+ * bundles six faces and wires them through `theme.generated.ts`, so anything styled from
+ * `t.typography.*` renders the theme's typeface; anything styled through heroui's own classes
+ * — `HButton.Label`, `Chip.Label`, `Input` — reads `var(--font-normal|medium|semibold|bold)`
+ * and sets no `font-weight` of its own, and heroui defines none of those four. Undefined,
+ * they made every heroui declaration invalid and every heroui component render the platform
+ * system font, so a themed app showed its heading in Playfair and its button label in SF Pro.
+ * `theming.py` now emits all four into `theme.generated.css`'s `:root`, naming the REGISTERED
+ * FACE per weight (`Inter_600SemiBold`) — which is what expo-font registers and what React
+ * Native can look up. Deliberately NOT in that file's `@theme` block: `--font-*` is one of
+ * Tailwind's utility namespaces and resolves ahead of `--font-weight-*`, so `--font-semibold`
+ * declared there would mint a font-FAMILY `font-semibold` utility shadowing the font-WEIGHT
+ * one — which nothing in this frozen kit writes today, but generated screens are full of
+ * Tailwind weight classes. A theme naming no family still emits none of the four, which is
+ * the old behaviour and the right one.
+ *
+ * Both `@variant` blocks are rendered independently and are NOT copies of each other.
+ * `Uniwind.setTheme()` flips the scheme at runtime and `useColorScheme()` follows it —
+ * verified on a physical device — so the block that is not pinned by app.json's
+ * `userInterfaceStyle` is reachable, and overwriting it would foreclose system-theme
+ * support rather than simplify anything.
+ */

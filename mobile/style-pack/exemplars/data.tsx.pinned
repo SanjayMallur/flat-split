@@ -1,0 +1,38 @@
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import { Screen } from '@/components/ui';
+import { FigureStrip, SectionHead, SpendDonut, TallyTopBar, TrendLine, UnderlineTabs } from '@/components/pack';
+import { MONTH, SLICES } from './sample';
+
+/**
+ * EXEMPLAR — data. Where the money went as one thin ring with the total inside and a dotted key
+ * under it; then the balance over time; then the month in three figures.
+ */
+export default function ReportsScreen() {
+  const [range, setRange] = useState('October');
+  return (
+    <Screen header={false}>
+      <TallyTopBar eyebrow="Monthly report" title="Where it went" />
+      <View style={{ marginTop: 8 }}>
+        <UnderlineTabs options={['August', 'September', 'October']} value={range} onChange={setRange} />
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <SpendDonut slices={SLICES} total="$2,115" caption="spent" />
+      </View>
+      <SectionHead title="Left to spend" action="30 days" />
+      <View style={{ marginTop: 12 }}>
+        <TrendLine points={MONTH} height={90} labels={['1 Oct', '15 Oct', '31 Oct']} />
+      </View>
+      <View style={{ marginTop: 16 }}>
+        <FigureStrip
+          size="md"
+          items={[
+            { label: 'Saved', value: '$640', ink: 'accent' },
+            { label: 'Avg day', value: '$68' },
+            { label: 'Biggest', value: '$1,250' },
+          ]}
+        />
+      </View>
+    </Screen>
+  );
+}

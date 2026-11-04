@@ -1,0 +1,48 @@
+import React from 'react';
+import { Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Screen } from '@/components/ui';
+import { Display, FigureStrip, IconButton, ReceiptCard, ReceiptCut, ReceiptLine, TallyButton, TallyTopBar } from '@/components/pack';
+import { useTheme } from '@/theme/ThemeProvider';
+
+/**
+ * EXEMPLAR — detail. The entry itself, as the paper it came from: a cream receipt in the mono, the
+ * one light thing in the look. Then which envelope it hit, and what can be done with it.
+ */
+export default function ReceiptScreen() {
+  const t = useTheme();
+  const nav = useNavigation();
+  return (
+    <Screen header={false}>
+      <TallyTopBar onBack={() => nav.goBack()} eyebrow="Sat 1 Nov · 08:42" title="Corner Roast" right={<IconButton icon="share" label="Share" />} />
+      <View style={{ marginTop: 14 }}>
+        <ReceiptCard>
+          <Display size={22} ink="onAccent">
+            Corner Roast
+          </Display>
+          <Text style={[t.typography.caption, { color: t.palette.textInverse, marginTop: 2 }]}>12 Mill Lane · Table 4</Text>
+          <ReceiptCut />
+          <ReceiptLine label="2 × Flat white" value="9.00" />
+          <ReceiptLine label="1 × Almond croissant" value="4.50" />
+          <ReceiptLine label="Tip" value="1.50" />
+          <ReceiptCut />
+          <ReceiptLine label="Total" value="$15.00" strong />
+          <Text style={[t.typography.caption, { color: t.palette.textInverse, marginTop: 6 }]}>Paid with Visa ending 4417</Text>
+        </ReceiptCard>
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <FigureStrip
+          size="md"
+          items={[
+            { label: 'Envelope', value: 'Eating out' },
+            { label: 'Left in it', value: '-$18', ink: 'danger' },
+          ]}
+        />
+      </View>
+      <View style={{ marginTop: 16, gap: 8 }}>
+        <TallyButton label="Split with Priya" icon="users" onPress={() => {}} />
+        <TallyButton label="Move to another envelope" variant="ghost" onPress={() => {}} />
+      </View>
+    </Screen>
+  );
+}

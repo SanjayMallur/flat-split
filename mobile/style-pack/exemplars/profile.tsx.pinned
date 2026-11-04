@@ -1,0 +1,46 @@
+import React from 'react';
+import { Text, View } from 'react-native';
+import { Screen } from '@/components/ui';
+import { Avatar, Display, Eyebrow, Figure, IconButton, LedgerRow, PlainRow, SectionHead, TallyTopBar } from '@/components/pack';
+import { useTheme } from '@/theme/ThemeProvider';
+import { ACCOUNTS, OWNER } from './sample';
+
+const SETTINGS = ['Budget month starts on the 1st', 'Linked banks', 'Export to a spreadsheet', 'Notifications'];
+
+/**
+ * EXEMPLAR — profile. The person small, in a brass frame, with what they are worth beside them; then
+ * the accounts behind that figure as ledger lines; then plain settings rows.
+ */
+export default function AccountsScreen() {
+  const t = useTheme();
+  return (
+    <Screen header={false}>
+      <TallyTopBar eyebrow={OWNER.since} title="Accounts" right={<IconButton icon="settings" label="Settings" />} />
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 16, gap: 14 }}>
+        <Avatar uri={OWNER.avatar} name={OWNER.name} />
+        <View style={{ flex: 1 }}>
+          <Display size={22}>{OWNER.name}</Display>
+          <Text style={[t.typography.caption, { color: t.palette.textMuted, marginTop: 2 }]}>Shares a budget with Priya</Text>
+        </View>
+      </View>
+      <View style={{ marginTop: 22 }}>
+        <Eyebrow>Net worth</Eyebrow>
+        <View style={{ marginTop: 4 }}>
+          <Figure value="$16,622.20" size="hero" />
+        </View>
+        <Text style={[t.typography.body, { color: t.palette.primary, marginTop: 4 }]}>Up $1,340 since September</Text>
+      </View>
+      <SectionHead title="Where it sits" action="Add" />
+      {ACCOUNTS.map((a, i) => (
+        <LedgerRow key={a.id} letter={a.letter} name={a.name} meta={a.meta} amount={a.amount} last={i === ACCOUNTS.length - 1} />
+      ))}
+      <SectionHead title="Settings" />
+      {SETTINGS.map((s, i) => (
+        <PlainRow key={s} title={s} last={i === SETTINGS.length - 1} />
+      ))}
+      <View style={{ marginTop: 18, alignItems: 'center' }}>
+        <Eyebrow>Sign out</Eyebrow>
+      </View>
+    </Screen>
+  );
+}

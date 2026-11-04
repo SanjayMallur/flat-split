@@ -1,0 +1,42 @@
+import React from 'react';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Screen } from '@/components/ui';
+import { BanknoteCard, EnvelopeBar, LedgerRow, SectionHead, TallyButton, TallyTopBar, TrendLine } from '@/components/pack';
+import type { RootStackParamList } from '@/navigation/routes';
+import { ENVELOPES, MONTH, TODAY } from './sample';
+
+/**
+ * EXEMPLAR — home. The one question a budget answers ("what is left?") on the framed note, with its
+ * trend and the way to add to it; then the envelopes; then the last few lines of the ledger.
+ * Top-level, so the page top is `TallyTopBar` on `header={false}`.
+ */
+export default function OverviewScreen() {
+  const nav = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  return (
+    <Screen header={false}>
+      <TallyTopBar eyebrow="Sat · 1 Nov" title="Good evening, Dev" />
+      <View style={{ marginTop: 14 }}>
+        <BanknoteCard eyebrow="Left to spend" value="$1,284.60" meta="of $3,400 this month · about $44 a day">
+          <View style={{ marginTop: 14 }}>
+            <TrendLine points={MONTH} height={56} />
+          </View>
+          <View style={{ marginTop: 14 }}>
+            <TallyButton label="Add an expense" icon="plus" onPress={() => nav.navigate('LogRun')} />
+          </View>
+        </BanknoteCard>
+      </View>
+      <SectionHead title="Envelopes" action="All 8" />
+      <View style={{ marginTop: 4 }}>
+        {ENVELOPES.map((e) => (
+          <EnvelopeBar key={e.name} name={e.name} spent={e.spent} limit={e.limit} fraction={e.fraction} note={e.note} />
+        ))}
+      </View>
+      <SectionHead title="Today" action="Ledger" />
+      {TODAY.map((row, i) => (
+        <LedgerRow key={row.id} letter={row.letter} name={row.name} meta={row.meta} amount={row.amount} last={i === TODAY.length - 1} />
+      ))}
+    </Screen>
+  );
+}

@@ -1,0 +1,106 @@
+/*
+ * Tally style pack. Rendered by services/worker/theming.py, then the raised surfaces, accent ink
+ * and fonts hand-tuned. `global.css` imports this file and stays FROZEN and static (ER15), so the
+ * escaping surface is machine-written values only and a template upgrade never collides with a
+ * project's theme.
+ *
+ * Every variable below is written explicitly. heroui aliases several of its defaults onto
+ * variables a theme overrides (`--surface-foreground: var(--foreground)`,
+ * `--surface: var(--white)`, ...), so a PARTIAL override renders white cards with
+ * invisible text -- verified on a physical device, 2026-08-02.
+ */
+
+@layer theme {
+  :root {
+    --font-normal: Lato_400Regular;
+    --font-medium: Lato_700Bold;
+    --font-semibold: Lato_700Bold;
+    --font-bold: Lato_700Bold;
+
+    @variant light {
+      --background: #f5f5f7;
+      --foreground: #1c1c1e;
+      --muted: #6c6c70;
+      --border: #e5e5ea;
+      --separator: #e5e5ea;
+      --accent: #ad831f;
+      --accent-foreground: #ffffff;
+      --link: #ad831f;
+      --success: #34c759;
+      --success-foreground: #1c1c1e;
+      --warning: #ff9500;
+      --warning-foreground: #1c1c1e;
+      --danger: #ff3b30;
+      --danger-foreground: #ffffff;
+      --surface: #ffffff;
+      --surface-foreground: #1c1c1e;
+      --surface-secondary: #efeff1;
+      --surface-secondary-foreground: #1c1c1e;
+      --surface-tertiary: #e5e5ea;
+      --surface-tertiary-foreground: #1c1c1e;
+      --overlay: #ffffff;
+      --overlay-foreground: #1c1c1e;
+      --backdrop: rgba(0, 0, 0, 0.4);
+      --default: #e5e5ea;
+      --default-foreground: #1c1c1e;
+      --field-background: #ffffff;
+      --field-foreground: #1c1c1e;
+      --field-placeholder: #8e8e93;
+      --field-border: #e5e5ea;
+      --segment: #efeff1;
+      --segment-foreground: #1c1c1e;
+      --focus: #ad831f;
+      --surface-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --overlay-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.12);
+      --field-shadow: 0 0 0 0 transparent inset;
+      --radius: 0.5rem;
+    }
+
+    @variant dark {
+      --background: #0e211b;
+      --foreground: #f3ecd9;
+      --muted: #98ada3;
+      --border: #2c4c42;
+      --separator: #2c4c42;
+      --accent: #e3bd63;
+      --accent-foreground: #10211b;
+      --link: #e3bd63;
+      --success: #8fd6a8;
+      --success-foreground: #1c1c1e;
+      --warning: #e3bd63;
+      --warning-foreground: #1c1c1e;
+      --danger: #ff8a70;
+      --danger-foreground: #10211b;
+      --surface: #16302a;
+      --surface-foreground: #f3ecd9;
+      --surface-secondary: #204036;
+      --surface-secondary-foreground: #f3ecd9;
+      --surface-tertiary: #40544c;
+      --surface-tertiary-foreground: #f3ecd9;
+      --overlay: #16302a;
+      --overlay-foreground: #f3ecd9;
+      --backdrop: rgba(0, 0, 0, 0.6);
+      --default: #204036;
+      --default-foreground: #f3ecd9;
+      --field-background: #16302a;
+      --field-foreground: #f3ecd9;
+      --field-placeholder: #98ada3;
+      --field-border: #2c4c42;
+      --segment: #204036;
+      --segment-foreground: #f3ecd9;
+      --focus: #e3bd63;
+      --surface-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+      --overlay-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.6);
+      --field-shadow: 0 0 0 0 transparent inset;
+      --radius: 0.5rem;
+    }
+  }
+}
+
+@theme {
+  --radius: 0.5rem;
+  --field-radius: calc(var(--radius) * 1.5);
+  --border-width: 1px;
+  --field-border-width: 1px;
+  --opacity-disabled: 0.5;
+}

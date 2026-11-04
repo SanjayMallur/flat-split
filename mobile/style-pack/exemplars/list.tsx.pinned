@@ -1,0 +1,53 @@
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Screen } from '@/components/ui';
+import { Eyebrow, FigureStrip, IconButton, LedgerRow, TallyTopBar, UnderlineTabs } from '@/components/pack';
+import { EARLIER, TODAY, YESTERDAY } from './sample';
+
+/**
+ * EXEMPLAR — list. Money in and out as one strip of figures, then every entry as a ledger line under
+ * its day. One row renderer for every group, so the screen has ONE control that opens the detail.
+ */
+export default function LedgerScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<Record<string, undefined>>>();
+  const [filter, setFilter] = useState('All');
+  return (
+    <Screen header={false}>
+      <TallyTopBar eyebrow="November 2026" title="Ledger" right={<IconButton icon="search" label="Search the ledger" />} />
+      <View style={{ marginTop: 8 }}>
+        <UnderlineTabs options={['All', 'Money in', 'Money out', 'Bills']} value={filter} onChange={setFilter} />
+      </View>
+      <View style={{ marginTop: 14 }}>
+        <FigureStrip
+          items={[
+            { label: 'In', value: '+$4,200', ink: 'accent' },
+            { label: 'Out', value: '-$2,115' },
+          ]}
+        />
+      </View>
+      {[
+        { label: 'Today · Sat 1 Nov', rows: TODAY },
+        { label: 'Friday 31 Oct', rows: YESTERDAY },
+        { label: 'Thursday 30 Oct', rows: EARLIER },
+      ].map((group) => (
+        <View key={group.label} style={{ marginTop: 18 }}>
+          <Eyebrow>{group.label}</Eyebrow>
+          {group.rows.map((r, i) => (
+            <LedgerRow
+              key={r.id}
+              letter={r.letter}
+              name={r.name}
+              meta={r.meta}
+              amount={r.amount}
+              income={r.income}
+              last={i === group.rows.length - 1}
+              onPress={() => navigation.navigate('RunDetail')}
+            />
+          ))}
+        </View>
+      ))}
+    </Screen>
+  );
+}
